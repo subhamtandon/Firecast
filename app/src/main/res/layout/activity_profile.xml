@@ -15,36 +15,35 @@
 
         <TextView
             android:id="@+id/textViewUserEmail"
-            android:layout_margin="15dp"
-            android:textSize="30sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_margin="15dp"
+            android:text="TextView"
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/editTextName"
-            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:hint="Enter full name" />
 
         <EditText
             android:id="@+id/editTextAddress"
-            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:hint="Enter address" />
 
         <Button
             android:id="@+id/buttonSave"
-            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:text="Save Information" />
 
         <Button
             android:id="@+id/buttonLogout"
-            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout" />
