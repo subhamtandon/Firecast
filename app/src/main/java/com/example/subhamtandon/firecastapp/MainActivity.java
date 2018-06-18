@@ -30,7 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -64,15 +64,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
 
-        textViewSignup = (TextView) findViewById(R.id.textViewSignup);
+        textViewSignup = (TextView) findViewById(R.id.textViewSignUp);
 
         progressDialog = new ProgressDialog(this);
 
         buttonGoogle = (SignInButton) findViewById(R.id.buttonGoogle);
 
-        buttonLogin.setOnClickListener(this);
-        textViewSignup.setOnClickListener(this);
-        buttonGoogle.setOnClickListener(this);
+
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -94,13 +92,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void signIn() {
+    public void signIn(View view) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
         progressDialog.setMessage("Signing in...");
         progressDialog.show();
 
+    }
+    private boolean isEmailValid(String email) {
+
+        return email.contains("@");
     }
 
     @Override
@@ -151,78 +153,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void userLogin(){
+    public void userLogin(View view){
 
         String email = editTextEmail .getText().toString().trim();
 
         String password = editTextPassword.getText().toString().trim();
 
+        String ready= "true";
         if (TextUtils.isEmpty(email)){
 
             //email is empty
-            Toast.makeText(this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+            editTextEmail.setError(getString(R.string.error_field_required));
+            ready = "false";
 
-            //stopping further execution
-            return;
+        }else if (!isEmailValid(email)) {
+            editTextPassword.setError(getString(R.string.error_invalid_email));
+            ready = "false";
         }
 
         if (TextUtils.isEmpty(password)){
 
             //password is empty
-            Toast.makeText(this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+            editTextPassword.setError(getString(R.string.error_field_required));
+            ready = "false";
 
-            //stopping further execution
-            return;
         }
         //if validations are ok
+        if(ready.equals("true")) {
+            progressDialog.setMessage("Logging in...");
+            progressDialog.show();
 
-        progressDialog.setMessage("Logging in...");
-        progressDialog.show();
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()) {
 
-                        progressDialog.dismiss();
-                        if (task.isSuccessful()){
+                                Log.d("pass", "signInWithEmail:success");
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), UserProfile.class));
 
-                            Log.d("pass", "signInWithEmail:success");
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), profileActivity.class));
+                            } else {
 
-                        } else {
+                                Log.w("fail", "signInWithEmail:failure", task.getException());
 
-                            Log.w("fail", "signInWithEmail:failure", task.getException());
+                            }
 
                         }
-
-                    }
-                });
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        if (v == buttonLogin){
-
-            userLogin();
-
-        }
-
-        if (v == textViewSignup){
-
-            finish();
-            startActivity(new Intent(this, RegisterActivity.class));
-
-        }
-
-        if (v == buttonGoogle){
-
-            signIn();
-
+                    });
         }
 
     }
+    public void signUpClicked(View view){
+        Intent i= new Intent(MainActivity.this, UserProfile.class);
+        startActivity(i);
+    }
+
 }

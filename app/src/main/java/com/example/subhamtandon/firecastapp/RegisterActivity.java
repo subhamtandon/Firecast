@@ -51,86 +51,88 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         progressDialog = new ProgressDialog(this);
 
-        buttonRegister.setOnClickListener(this);
+        //buttonRegister.setOnClickListener(this);
 
-        textViewSignin.setOnClickListener(this);
+        //textViewSignin.setOnClickListener(this);
 
     }
+    private boolean isEmailValid(String email) {
 
-    private void registerUser(){
+        return email.contains("@");
+    }
 
-        String email = editTextEmail .getText().toString().trim();
+    public void registerUser(View view){
 
-        String password = editTextPassword.getText().toString().trim();
+        String email = editTextEmail .getText().toString();
 
+        String password = editTextPassword.getText().toString();
+
+        String ready= "true";
         if (TextUtils.isEmpty(email)){
 
             //email is empty
-            Toast.makeText(this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+            editTextEmail.setError(getString(R.string.error_field_required));
+            ready = "false";
 
-            //stopping further execution
-            return;
+        }else if (!isEmailValid(email)) {
+            editTextPassword.setError(getString(R.string.error_invalid_email));
+            ready = "false";
         }
 
         if (TextUtils.isEmpty(password)){
 
             //password is empty
-            Toast.makeText(this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+            editTextPassword.setError(getString(R.string.error_field_required));
+            ready = "false";
 
-            //stopping further execution
-            return;
         }
         //if validations are ok
+        if (ready.equals("true")) {
+            progressDialog.setMessage("Registering User...");
+            progressDialog.show();
 
-        progressDialog.setMessage("Registering User...");
-        progressDialog.show();
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()) {
 
-                        progressDialog.dismiss();
-                        if (task.isSuccessful()){
+                                Log.d("pass", "createUserWithEmail:success");
+                                Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), profileActivity.class));
 
-                            Log.d("pass", "createUserWithEmail:success");
-                            Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), profileActivity.class));
+                            } else {
+
+                                Log.w("fail", "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegisterActivity.this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
+
+                            }
+                            progressDialog.dismiss();
 
                         }
-
-                        else {
-
-                            Log.w("fail", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
-
-                        }
-                        progressDialog.dismiss();
-
-                    }
-                });
-
+                    });
+        }
     }
 
     @Override
     public void onClick(View v) {
 
-        if (v == buttonRegister){
-
-            registerUser();
-
-        }
-
-        if (v == textViewSignin){
-
             //will open login activity
             finish();
             startActivity(new Intent(this, MainActivity.class));
 
-        }
-
-
     }
+    /*
+    public void signUpClicked(View view){
+        Intent i= new Intent(this, UserProfile.class);
+        startActivity(i);
+    }
+    */
+
+
+
 }
 
