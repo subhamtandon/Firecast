@@ -30,7 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  View.OnClickListener{
 
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonGoogle = (SignInButton) findViewById(R.id.buttonGoogle);
 
+        buttonGoogle.setOnClickListener(this);
 
 
         // Configure Google Sign In
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void signIn(View view) {
+    private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
@@ -211,4 +212,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+
+    @Override
+    public void onClick(View v) {
+        signIn();
+    }
 }

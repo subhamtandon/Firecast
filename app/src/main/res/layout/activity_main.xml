@@ -33,7 +33,7 @@
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             android:layout_marginTop="15dp"
-            android:onClick="signIn"/>
+            />
 
         <TextView
             android:layout_width="match_parent"
