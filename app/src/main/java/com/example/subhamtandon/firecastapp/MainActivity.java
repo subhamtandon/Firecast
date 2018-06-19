@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
                                 Log.d("pass", "signInWithEmail:success");
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), UserProfile.class));
+                                startActivity(new Intent(getApplicationContext(), profileActivity.class));
 
                             } else {
 
@@ -208,8 +208,9 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
     }
     public void signUpClicked(View view){
-        Intent i= new Intent(MainActivity.this, UserProfile.class);
-        startActivity(i);
+        Log.i("info","clicked");
+        startActivity(new Intent(getApplicationContext(), UserProfile.class));
+
     }
 
 
