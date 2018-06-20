@@ -4,10 +4,12 @@ package com.example.subhamtandon.firecastapp;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
  */
 public class StudyFragment extends Fragment {
 
+    CardView anatomyCard, physiologyCard, biochemistryCard, pathalogyCard;
 
     public StudyFragment() {
         // Required empty public constructor
@@ -25,7 +28,43 @@ public class StudyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_study, container, false);
+        View view = inflater.inflate(R.layout.fragment_study, container, false);
+
+        anatomyCard =(CardView)view.findViewById(R.id.anatomyCard);
+        physiologyCard=(CardView)view.findViewById(R.id.physiologyCard);
+        biochemistryCard=(CardView)view.findViewById(R.id.biochemistryCard);
+        pathalogyCard=(CardView)view.findViewById(R.id.pathologyCard);
+
+        anatomyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Link new fragment
+                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        physiologyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Link new fragment
+                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        biochemistryCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Link new fragment
+                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        pathalogyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Link new fragment
+                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
     }
     @Override
     public void onResume() {

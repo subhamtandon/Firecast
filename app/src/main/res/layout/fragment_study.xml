@@ -44,7 +44,9 @@
             app:cardBackgroundColor="#4c97e7"
             android:layout_margin="16dp"
             app:cardElevation="8dp"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:id="@+id/anatomyCard"
+            android:clickable="true">
 
             <LinearLayout
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -87,7 +89,9 @@
             app:cardBackgroundColor="#57df2a"
             android:layout_margin="16dp"
             app:cardElevation="8dp"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:id="@+id/physiologyCard"
+            android:clickable="true">
 
             <LinearLayout
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -131,7 +135,9 @@
             android:layout_margin="16dp"
             app:cardBackgroundColor="#e18012"
             app:cardElevation="8dp"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:id="@+id/biochemistryCard"
+            android:clickable="true">
 
             <LinearLayout
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -173,7 +179,9 @@
             app:cardBackgroundColor="#d71f1f"
             app:cardElevation="8dp"
             app:cardCornerRadius="8dp"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            android:id="@+id/pathologyCard"
+            android:clickable="true">
 
             <LinearLayout
                 android:layout_gravity="center_horizontal|center_vertical"
