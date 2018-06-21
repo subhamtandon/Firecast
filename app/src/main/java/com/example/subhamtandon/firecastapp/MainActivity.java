@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                             Log.d("info", "signInWithCredential:success");
                             finish();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            startActivity(new Intent(getApplicationContext(), profileActivity.class));
+                            startActivity(new Intent(getApplicationContext(), UserProfile.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("info", "signInWithCredential:failure", task.getException());
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
                                 Log.d("pass", "signInWithEmail:success");
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), profileActivity.class));
+                                startActivity(new Intent(getApplicationContext(), UserProfile.class));
 
                             } else {
 
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     }
     public void signUpClicked(View view){
         Log.i("info","clicked");
-        startActivity(new Intent(getApplicationContext(), UserProfile.class));
+        startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
 
     }
 

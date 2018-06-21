@@ -27,7 +27,7 @@
         <activity
             android:name=".QuestionsPracticeActivity"
             android:label="@string/title_activity_questions_practice"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
