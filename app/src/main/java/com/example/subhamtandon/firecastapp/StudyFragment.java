@@ -1,6 +1,7 @@
 package com.example.subhamtandon.firecastapp;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -39,28 +40,32 @@ public class StudyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: Link new fragment
-                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),QuestionsPracticeActivity.class));
+                //Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
             }
         });
         physiologyCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Link new fragment
-                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),QuestionsPracticeActivity.class));
+                //Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
             }
         });
         biochemistryCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Link new fragment
-                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),QuestionsPracticeActivity.class));
+                //Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
             }
         });
         pathalogyCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Link new fragment
-                Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(),QuestionsPracticeActivity.class));
+                //Toast.makeText(getActivity(), "Will be available soon", Toast.LENGTH_SHORT).show();
             }
         });
 
