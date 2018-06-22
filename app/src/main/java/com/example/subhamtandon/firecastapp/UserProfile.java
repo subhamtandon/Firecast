@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserProfile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +59,8 @@ public class UserProfile extends AppCompatActivity
 
         final FirebaseUser user = firebaseAuth.getCurrentUser();
 
+
+        //textViewUserName.setText(user.);
         textViewUserEmail.setText(user.getEmail());
 
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();

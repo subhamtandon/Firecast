@@ -18,11 +18,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private EditText editTextFirstName;
+    private EditText editTextLastName;
     private Button buttonRegister;
     private TextView textViewSignin;
     private ProgressDialog progressDialog;
@@ -44,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextFirstName = (EditText) findViewById(R.id.editTextFirstName);
+        editTextLastName = (EditText) findViewById(R.id.editTextLastName);
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
@@ -51,9 +56,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         progressDialog = new ProgressDialog(this);
 
-        //buttonRegister.setOnClickListener(this);
+        buttonRegister.setOnClickListener(this);
 
-        //textViewSignin.setOnClickListener(this);
+        textViewSignin.setOnClickListener(this);
 
     }
     private boolean isEmailValid(String email) {
@@ -61,9 +66,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return email.contains("@");
     }
 
-    public void registerUser(View view){
+    public void registerUser(){
 
-        String email = editTextEmail .getText().toString();
+        final String firstName = editTextFirstName.getText().toString();
+
+        final String lastName = editTextLastName.getText().toString();
+
+        final String email = editTextEmail.getText().toString();
 
         String password = editTextPassword.getText().toString();
 
@@ -86,6 +95,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             ready = "false";
 
         }
+
+        if (TextUtils.isEmpty(firstName)){
+
+            //firstName is empty
+            editTextFirstName.setError("This field is required");
+            ready = "false";
+
+        }
+
+        if (TextUtils.isEmpty(lastName)){
+
+            //lastName is empty
+            editTextLastName.setError("This field is required");
+            ready = "false";
+
+        }
         //if validations are ok
         if (ready.equals("true")) {
             progressDialog.setMessage("Registering User...");
@@ -99,10 +124,32 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
 
-                                Log.d("pass", "createUserWithEmail:success");
-                                Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                finish();
-                                startActivity(new Intent(getApplicationContext(), profileActivity.class));
+                                UserInformation user = new UserInformation(
+                                        firstName,
+                                        lastName,
+                                        email
+                                );
+
+                                FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+
+                                            Log.d("pass", "createUserWithEmail:success");
+                                            Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            startActivity(new Intent(getApplicationContext(),UserProfile.class));
+
+                                        }else {
+
+                                            Log.w("fail", "createUserWithEmail:failure", task.getException());
+                                            Toast.makeText(RegisterActivity.this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                });
 
                             } else {
 
@@ -120,9 +167,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
+        if(v == textViewSignin) {
             //will open login activity
             finish();
             startActivity(new Intent(this, MainActivity.class));
+        }
+        if(v == buttonRegister){
+            registerUser();
+        }
 
     }
     /*

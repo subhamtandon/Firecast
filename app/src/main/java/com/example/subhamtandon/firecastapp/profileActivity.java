@@ -18,13 +18,11 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
 
     private FirebaseAuth firebaseAuth;
 
-    private DatabaseReference databaseReference;
 
     private TextView textViewUserEmail;
     private Button buttonLogout;
 
-    private EditText editTextName, editTextAddress;
-    private Button buttonSave;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +38,8 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
 
         }
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextAddress = (EditText) findViewById(R.id.editTextAddress);
-        buttonSave = (Button) findViewById(R.id.buttonSave);
+
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -55,24 +50,10 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
         buttonLogout.setOnClickListener(this);
-        buttonSave.setOnClickListener(this);
+
 
     }
 
-    private void saveUserInformation() {
-
-        String name = editTextName.getText().toString().trim();
-        String add = editTextAddress.getText().toString().trim();
-
-        UserInformation userInformation = new UserInformation(name, add);
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        databaseReference.child(user.getUid()).setValue(userInformation);
-
-        Toast.makeText(this, "Information Saved", Toast.LENGTH_SHORT).show();
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -83,12 +64,6 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
             firebaseAuth.getInstance().signOut();
             finish();
             startActivity(new Intent(this, MainActivity.class));
-
-        }
-
-        if (v == buttonSave){
-
-            saveUserInformation();
 
         }
 

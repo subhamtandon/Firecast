@@ -2,15 +2,17 @@ package com.example.subhamtandon.firecastapp;
 
 public class UserInformation {
 
-    public String name;
-    public String address;
+    public String firstName;
+    public String lastName;
+    public String email;
 
     public UserInformation(){
 
     }
 
-    public UserInformation(String name, String address) {
-        this.name = name;
-        this.address = address;
+    public UserInformation(String firstName, String lastName,String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 }
