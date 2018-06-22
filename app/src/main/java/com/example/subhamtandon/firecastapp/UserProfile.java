@@ -13,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class UserProfile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    TextView textViewUserName, textViewUserEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,10 @@ public class UserProfile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        textViewUserName = (TextView)header.findViewById(R.id.textViewUserName);
+        textViewUserEmail = (TextView)header.findViewById(R.id.textViewUserEmail);
 
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flMain, new HomeFragment());
