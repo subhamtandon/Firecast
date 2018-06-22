@@ -15,8 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class UserProfile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    FirebaseAuth firebaseAuth;
 
     TextView textViewUserName, textViewUserEmail;
     @Override
@@ -47,6 +52,12 @@ public class UserProfile extends AppCompatActivity
 
         textViewUserName = (TextView)header.findViewById(R.id.textViewUserName);
         textViewUserEmail = (TextView)header.findViewById(R.id.textViewUserEmail);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        textViewUserEmail.setText(user.getEmail());
 
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flMain, new HomeFragment());
