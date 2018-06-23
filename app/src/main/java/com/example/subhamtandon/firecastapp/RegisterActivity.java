@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -151,11 +154,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     }
                                 });
 
+                                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(firstName + " " + lastName)
+                                        .build();
+
+                                firebaseUser.updateProfile(profileUpdates);
+
                             } else {
 
-                                Log.w("fail", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterActivity.this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException){
 
+                                    Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                                }else {
+
+                                    Log.w("fail", "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(RegisterActivity.this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
+
+                                }
                             }
                             progressDialog.dismiss();
 
